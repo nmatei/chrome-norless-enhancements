@@ -5,7 +5,7 @@ Some enhancements for **app.norless.com**
 ## 💠 Features & Usage
 
 - [x] Open http://app.norless.com/
-- [x] `Right Click` on body to open context menu with:
+- [x] `Right Click` on **Playlist** to open context menu with:
   - [x] 📩 Save Playlist as HTML
   - [x] 📋 Copy Playlist to Clipboard
 - [ ] Sync selections with http://app-ua.norless.com/
