@@ -20,7 +20,7 @@ function showContextMenu(e) {
       itemId: "printable",
       onmouseenter: storeText,
       handler: (target) => {
-        startPrint(target);
+        saveAsHTML(target);
       }
     },
     {

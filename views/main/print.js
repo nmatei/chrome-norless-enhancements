@@ -2,7 +2,7 @@ function getDocTitle() {
   return new Date().toISOString().split("T")[0] + "-Songs";
 }
 
-function startPrint(target) {
+function saveAsHTML(target) {
   const docTitle = getDocTitle();
   const html = getPlaylistDoc(target);
   download(html, docTitle + ".html", "text/plain");
@@ -13,25 +13,25 @@ async function copyPlaylist(target) {
   //  when have <span class="text"></span> inside
   //  - try to render html inside iframe and read text from there
   //const body = mapBody(target, '');
-  const html = getPlaylistDoc(target);
+  const html = getPlaylistDoc(target, "# ");
   const body = await getInnerToClipboard(html);
   copyToClipboard(body);
 }
 
-function getPlaylistDoc(target) {
+function getPlaylistDoc(target, titlePrefix = "") {
   const docTitle = getDocTitle();
-  const body = mapBody(target);
+  const body = mapBody(target, "<br />", titlePrefix);
   return getPrintPage(body, docTitle);
 }
 
-function mapBody(target, nl = '<br />') {
+function mapBody(target, nl = "<br />", titlePrefix = "") {
   const songs = getSongsEntries(target);
   let body = Object.values(songs)
     .map(e => ({
       title: e.title,
       slides: e.slides ? e.slides.map(s => s.text.replaceAll("\n", `${nl}\n`)).join(`${nl}${nl}\n\n`) : ""
     }))
-    .map(c => `<h1>${c.title}</h1>\n${c.slides}`)
+    .map(c => `<h1>${titlePrefix}${c.title}</h1>\n${c.slides}`)
     .join(`${nl}${nl}\n\n`);
 
   body = body.replaceAll(`<span class="final">*</span>`, ``);
